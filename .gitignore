@@ -1,0 +1,26 @@
+# Bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+env/
+venv/
+ENV/
+
+# IDEs
+.idea/
+.vscode/
+
+# Logs and reports
+*.log
+reports/
+screenshots/
+
+# Test data
+*.xlsx
+
+# System files
+.DS_Store
+Thumbs.db
+
