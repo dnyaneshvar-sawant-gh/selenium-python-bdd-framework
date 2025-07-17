@@ -1,18 +1,19 @@
 import configparser
 import os
-config = configparser.RawConfigParser()
-config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'config', 'config.ini'))
-config.read(config_path)
 
 class ReadConfig:
-    @staticmethod
-    def getApplicationURL():
-        return config.get('common', 'baseURL')
+    def __init__(self, config_path='config/config.ini'):  # ✅ Pointing to subfolder
+        self.config = configparser.ConfigParser()
+        abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', config_path))
+        print(f"[INFO] Loading config from: {abs_path}")  # Optional for debug
+        self.config.read(abs_path)
 
-    @staticmethod
-    def getUsername():
-        return config.get('common', 'username')
+    def get_app_url(self):
+        return self.config.get('app', 'url')
 
-    @staticmethod
-    def getPassword():
-        return config.get('common', 'password')
+    def get_browser_name(self):
+        return self.config.get('settings', 'browser')
+
+    def should_clear_report(self):
+        # Priority: Environment variable from .bat > config.ini fallback
+        return os.getenv("CLEAR_REPORT", self.config.get('settings', 'clear_report', fallback="no")).lower() == 'yes'
