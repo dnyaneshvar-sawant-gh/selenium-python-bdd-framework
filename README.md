@@ -1,4 +1,4 @@
-# SauceDemo BDD Automation Framework
+# Selenium, Pytest BDD Automation Framework
 
 This repository contains an end-to-end automation framework for testing the [SauceDemo](https://www.saucedemo.com/) web application. It is built using:
 
