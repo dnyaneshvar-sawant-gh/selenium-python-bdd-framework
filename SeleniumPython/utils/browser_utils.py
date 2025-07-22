@@ -1,4 +1,4 @@
-import tempfile
+import os
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions, Options
@@ -43,26 +43,33 @@ class BrowserUtils:
                 print("Launching Chrome browser...")
                 chrome_options = Options()
 
-                # Create temporary user profile
-                temp_profile = tempfile.mkdtemp()
-                chrome_options.add_argument(f"--user-data-dir={temp_profile}")
+                # Set headless if requested
+                background_run = os.getenv('BACKGROUND_RUN', 'FALSE').upper()
+                if background_run == 'TRUE':
+                    print("Running in headless mode...")
+                    chrome_options.add_argument("--headless=new")
+                    chrome_options.add_argument("--disable-gpu")
+                    chrome_options.add_argument("--window-size=1920,1080")
 
-                # Disable password manager and autofill
-                prefs = {
-                    "credentials_enable_service": False,
-                    "profile.password_manager_enabled": False,
-                    "autofill.profile_enabled": False,
-                    "autofill.credit_card_enabled": False
-                }
-                chrome_options.add_experimental_option("prefs", prefs)
-
-                # Suppress other features
-                chrome_options.add_argument("--disable-notifications")
-                chrome_options.add_argument("--disable-infobars")
+                # Disable background services that trigger GCM
+                chrome_options.add_argument("--no-default-browser-check")
+                chrome_options.add_argument("--no-first-run")
+                chrome_options.add_argument("--disable-background-networking")
+                chrome_options.add_argument("--disable-sync")
                 chrome_options.add_argument("--disable-extensions")
-                chrome_options.add_argument("--incognito")
+                chrome_options.add_argument("--disable-default-apps")
+                chrome_options.add_argument("--metrics-recording-only")
+                chrome_options.add_argument("--disable-component-update")
+                chrome_options.add_argument("--disable-notifications")
+                chrome_options.add_argument("--disable-popup-blocking")
+                chrome_options.add_argument("--disable-background-timer-throttling")
+                chrome_options.add_argument("--disable-renderer-backgrounding")
+                chrome_options.add_argument("--disable-device-discovery-notifications")
+                chrome_options.add_argument("--disable-domain-reliability")
 
-                driver = webdriver.Chrome(service=ChromeService(), options=chrome_options)
+                # Launch Chrome
+                service = ChromeService()
+                driver = webdriver.Chrome(service=service, options=chrome_options)
                 driver.maximize_window()
                 return driver
         except Exception as e:

@@ -2,10 +2,10 @@ import configparser
 import os
 
 class ReadConfig:
-    def __init__(self, config_path='config/config.ini'):  # ✅ Pointing to subfolder
+    def __init__(self, config_path='config/config.ini'):
         self.config = configparser.ConfigParser()
         abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', config_path))
-        print(f"[INFO] Loading config from: {abs_path}")  # Optional for debug
+        print(f"[INFO] Loading config from: {abs_path}")
         self.config.read(abs_path)
 
     def get_app_url(self):

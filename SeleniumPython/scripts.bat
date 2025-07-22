@@ -2,10 +2,11 @@
 setlocal
 
 :: === Configuration ===
-set TAG=@RemoveProduct
+set TAG=@Regression
 set BROWSER_NAME=chrome
-set CLEAR_REPORT=yes
-set CLEAR_SCREENSHOT=yes
+set CLEAR_REPORT=TRUE
+set CLEAR_SCREENSHOT=TRUE
+set BACKGROUND_RUN=TRUE
 
 :: === Paths ===
 set REPORT_BASE=reports
@@ -18,7 +19,7 @@ set BROWSER_NAME=%BROWSER_NAME%
 set CLEAR_REPORT=%CLEAR_REPORT%
 
 :: === Clear old reports if enabled ===
-if /I "%CLEAR_REPORT%"=="yes" (
+if /I "%CLEAR_REPORT%"=="TRUE" (
     echo [INFO] Clearing old report files...
     if exist %REPORT_BASE% (
         rmdir /S /Q %REPORT_BASE%
@@ -32,7 +33,7 @@ if /I "%CLEAR_REPORT%"=="yes" (
 )
 
 :: === Clear screenshots if enabled ===
-if /I "%CLEAR_SCREENSHOT%"=="yes" (
+if /I "%CLEAR_SCREENSHOT%"=="TRUE" (
     echo [INFO] Clearing screenshots in '%SCREENSHOT_DIR%'...
     if exist %SCREENSHOT_DIR% (
         del /Q %SCREENSHOT_DIR%\*

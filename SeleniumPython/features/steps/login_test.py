@@ -40,8 +40,9 @@ def step_impl(context):
 @then("User Logout from the Application")
 def step_impl(context):
     login_page = LoginPage(context.driver)
+    utils = CommonUtils()
     time.sleep(1)
-    CommonUtils.accept_alert_if_present(context.driver)
+    utils.accept_alert_if_present(context.driver)
     login_page.click_menu()
     time.sleep(1)
     login_page.click_logout()
